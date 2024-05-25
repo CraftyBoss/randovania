@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Show confirmation dialog when closing the main window or multiplayer session window while generation is in progress.
 - Fixed: When editing the preset description after another change in a preset, the cursor position is now retained.
 - Fixed: Closing the multiplayer session window while generation is in progress will now abort the generation.
+- Changed: Ammo pickups now have a smaller impact in generator.
 
 ### Door Lock Randomizer
 
