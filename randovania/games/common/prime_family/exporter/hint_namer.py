@@ -27,13 +27,6 @@ def _area_name(region_list: RegionList, pickup_node: PickupNode, hide_region: bo
         return region_list.area_name(area)
 
 
-def colorize_text(color: str, text: str, with_color: bool):
-    if with_color:
-        return f"&push;&main-color={color};{text}&pop;"
-    else:
-        return text
-
-
 class PrimeFamilyHintNamer(HintNamer):
     location_formatters: dict[HintLocationPrecision, LocationFormatter]
 
@@ -51,36 +44,42 @@ class PrimeFamilyHintNamer(HintNamer):
             ),
             HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(
                 patches,
-                lambda msg, with_color: colorize_text(self.color_location, msg, with_color),
+                lambda msg, with_color: self.colorize_text(self.color_location, msg, with_color),
             ),
             HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(
                 patches,
-                lambda msg, with_color: colorize_text(self.color_location, msg, with_color),
+                lambda msg, with_color: self.colorize_text(self.color_location, msg, with_color),
                 players_config,
             ),
         }
 
+    def colorize_text(self, color: str, text: str, with_color: bool):
+        if with_color:
+            return f"&push;&main-color={color};{text}&pop;"
+        else:
+            return text
+
     def format_joke(self, joke: str, with_color: bool) -> str:
-        return colorize_text(self.color_joke, joke, with_color)
+        return self.colorize_text(self.color_joke, joke, with_color)
 
     def format_player(self, name: str, with_color: bool) -> str:
-        return colorize_text(self.color_player, name, with_color)
+        return self.colorize_text(self.color_player, name, with_color)
 
     def format_region(self, location: PickupLocation, with_color: bool) -> str:
         region_list = default_database.game_description_for(location.game).region_list
         result = region_list.region_name_from_node(region_list.node_from_pickup_index(location.location), True)
-        return colorize_text(self.color_location, result, with_color)
+        return self.colorize_text(self.color_location, result, with_color)
 
     def format_area(self, location: PickupLocation, with_region: bool, with_color: bool) -> str:
         region_list = default_database.game_description_for(location.game).region_list
         result = _area_name(region_list, region_list.node_from_pickup_index(location.location), not with_region)
-        return colorize_text(self.color_location, result, with_color)
+        return self.colorize_text(self.color_location, result, with_color)
 
     def format_location_hint(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
         return self.location_formatters[hint.precision.location].format(
             game,
             dataclasses.replace(
-                pick_hint, pickup_name=colorize_text(self.color_item, pick_hint.pickup_name, with_color)
+                pick_hint, pickup_name=self.colorize_text(self.color_item, pick_hint.pickup_name, with_color)
             ),
             hint,
             with_color,
@@ -88,7 +87,7 @@ class PrimeFamilyHintNamer(HintNamer):
 
     def format_resource_is_starting(self, resource: ItemResourceInfo, with_color: bool) -> str:
         """Used when for when an item has a guaranteed hint, but is a starting item."""
-        return f"{colorize_text(self.color_item, resource.long_name, with_color)} has no need to be located."
+        return f"{self.colorize_text(self.color_item, resource.long_name, with_color)} has no need to be located."
 
     def format_guaranteed_resource(
         self,
@@ -102,7 +101,7 @@ class PrimeFamilyHintNamer(HintNamer):
         if player_name is not None:
             determiner = self.format_player(player_name, with_color=with_color) + "'s "
 
-        resource_color = colorize_text(self.color_item, resource.long_name, with_color)
+        resource_color = self.colorize_text(self.color_item, resource.long_name, with_color)
         location_color = self.format_location(
             location, with_region=True, with_area=not hide_area, with_color=with_color
         )
