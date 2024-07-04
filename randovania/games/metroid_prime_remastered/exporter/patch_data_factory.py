@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 import randovania
@@ -10,46 +11,68 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.metroid_prime_remastered.exporter.hint_namer import MP1RHintNamer
+from randovania.games.metroid_prime_remastered.layout.blank_configuration import MP1RConfiguration
 from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode
-from randovania.games.prime1.patcher import prime_items
+from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
     from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
-    from randovania.games.metroid_prime_remastered.layout.blank_configuration import MP1RConfiguration
     from randovania.games.metroid_prime_remastered.layout.blank_cosmetic_patches import MP1RCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
 
+_EASTER_EGG_SHINY_MISSILE = 1024
 
 _STARTING_ITEM_NAME_TO_INDEX = {
-    "PowerBeam": "Power",
-    "Ice": "Ice",
-    "Wave": "Wave",
-    "Plasma": "Plasma",
-    "Missiles": "Missile",
-    "ScanVisor": "Scan",
-    "Bombs": "Bombs",
-    "PowerBombs": "PowerBomb",
-    "Flamethrower": "Flamethrower",
-    "ThermalVisor": "Thermal",
-    "Charge": "Charge",
-    "SuperMissile": "Supers",
-    "Grapple": "Grapple",
-    "Xray": "X-Ray",
-    "IceSpreader": "IceSpreader",
-    "SpaceJump": "SpaceJump",
-    "MorphBall": "MorphBall",
-    "CombatVisor": "Combat",
-    "BoostBall": "Boost",
-    "SpiderBall": "Spider",
-    "GravitySuit": "GravitySuit",
-    "VariaSuit": "VariaSuit",
-    "PhazonSuit": "PhazonSuit",
-    "EnergyTanks": "EnergyTank",
-    "Wavebuster": "Wavebuster",
+    "powerBeam": "Power",
+    "ice": "Ice",
+    "wave": "Wave",
+    "plasma": "Plasma",
+    "missiles": "Missile",
+    "scanVisor": "Scan",
+    "bombs": "Bombs",
+    "powerBombs": "PowerBomb",
+    "flamethrower": "Flamethrower",
+    "thermalVisor": "Thermal",
+    "charge": "Charge",
+    "superMissile": "Supers",
+    "grapple": "Grapple",
+    "xray": "X-Ray",
+    "iceSpreader": "IceSpreader",
+    "spaceJump": "SpaceJump",
+    "morphBall": "MorphBall",
+    "combatVisor": "Combat",
+    "boostBall": "Boost",
+    "spiderBall": "Spider",
+    "gravitySuit": "GravitySuit",
+    "variaSuit": "VariaSuit",
+    "phazonSuit": "PhazonSuit",
+    "energyTanks": "EnergyTank",
+    "wavebuster": "Wavebuster",
 }
+
+# The following locations have cutscenes that weren't removed
+_LOCATIONS_WITH_MODAL_ALERT = {
+    63,  # Artifact Temple
+    23,  # Watery Hall (Charge Beam)
+    50,  # Research Core
+}
+
+# Show a popup on collection if two or more is for another player.
+# The location to the right is considered for the count, but it can't show a popup.
+_LOCATIONS_GROUPED_TOGETHER = [
+    ({0, 1, 2, 3}, None),  # Main Plaza
+    ({5, 6, 7}, None),  # Ruined Shrine (all 3)
+    ({94}, 97),  # Warrior shrine -> Fiery Shores Tunnel
+    ({55}, 54),  # Gravity Chamber: Upper -> Lower
+    ({19, 17}, None),  # Hive Totem + Transport Access North
+    ({59}, 58),  # Alcove -> Landing Site
+    ({62, 65}, None),  # Root Cave + Arbor Chamber
+    ({15, 16}, None),  # Ruined Gallery
+    ({52, 53}, None),  # Research Lab Aether
+]
 
 
 def _remove_empty(d):
@@ -66,8 +89,9 @@ def _remove_empty(d):
         return {k: v for k, v in ((k, _remove_empty(v)) for k, v in d.items()) if not empty(v)}
 
 
-def prime_remastered_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails) -> dict:
-    name = detail.model.name
+def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails) -> dict:
+    name = detail.name
+    collection_text = detail.collection_text[0]
     pickup_type = "Nothing"
     count = 0
 
@@ -78,24 +102,46 @@ def prime_remastered_pickup_details_to_patcher(detail: pickup_exporter.ExportedP
         for resource, quantity in detail.conditional_resources[0].resources:
             if resource.extra["item_id"] >= 1000:
                 continue
-            pickup_type = name
+            pickup_type = resource.long_name
             count = quantity
             break
 
     result = {
         "type": pickup_type,
-        "model": pickup_type,  # placeholder for now, we don't have actual need yet to split type from model
+        # "scanText": f"{name}. {detail.description}".strip(),
+        # "hudmemoText": collection_text,
         "pickupCount": count,
-        "instanceId": "",
     }
 
     return result
 
 
+def _create_locations_with_modal_hud_memo(pickups: list[pickup_exporter.ExportedPickupDetails]) -> set[int]:
+    result = set()
+
+    for index in _LOCATIONS_WITH_MODAL_ALERT:
+        if pickups[index].other_player:
+            result.add(index)
+
+    for indices, extra in _LOCATIONS_GROUPED_TOGETHER:
+        num_other = sum(pickups[i].other_player for i in indices)
+        if extra is not None:
+            num_other += pickups[extra].other_player
+
+        if num_other > 1:
+            for index in indices:
+                if pickups[index].other_player:
+                    result.add(index)
+
+    return result
+
+
 def _name_for_location(region_list: RegionList, location: AreaIdentifier) -> str:
-    area = region_list.area_by_area_location(location)
-    region = region_list.region_by_area_location(location)
-    return f'{region.extra["pak_folder"]}:{area.extra["pak_file"]}'
+    loc = location.as_tuple
+    if loc in prime1_elevators.RANDOMPRIME_CUSTOM_NAMES and loc != ("Frigate Orpheon", "Exterior Docking Hangar"):
+        return prime1_elevators.RANDOMPRIME_CUSTOM_NAMES[loc]
+    else:
+        return region_list.area_name(region_list.area_by_area_location(location), separator=":")
 
 
 def _name_for_start_location(region_list: RegionList, location: NodeIdentifier) -> str:
@@ -143,39 +189,39 @@ class MP1RPatchDataFactory(PatchDataFactory):
         level_data = {}
         for region in regions:
             level_data[region.name] = {
-                "worldFolder": "",
+                "transports": {},
                 "rooms": {},
             }
 
             for area in region.areas:
                 level_data[region.name]["rooms"][area.name] = {
-                    "pakName": "",
+                    "pak_path": "",
                     "pickups": [],
                     "doors": {},
                 }
 
         # serialize pickup modifications
         for region in regions:
-            set_folder = False
             for area in region.areas:
                 pickup_nodes = (node for node in area.nodes if isinstance(node, PickupNode))
                 pickup_nodes = sorted(pickup_nodes, key=lambda n: n.pickup_index)
 
                 if len(pickup_nodes) > 0:
-                    level_data[region.name]["rooms"][area.name]["pakName"] = area.extra["pak_file"] + ".pak"
-                    set_folder = True
+                    rel_path = Path(region.extra["pak_folder"])
+                    rel_path = rel_path.joinpath(area.extra["pak_file"] + ".pak")
+
+                    level_data[region.name]["rooms"][area.name]["pak_path"] = rel_path.__str__()
 
                 for node in pickup_nodes:
                     pickup_index = node.pickup_index.index
-                    pickup = prime_remastered_pickup_details_to_patcher(pickup_list[pickup_index])
+                    pickup = prime1_pickup_details_to_patcher(pickup_list[pickup_index])
                     if "instance_id" in node.extra:
-                        pickup["instanceId"] = node.extra["instance_id"]
+                        pickup["instance_id"] = node.extra["instance_id"]
                     else:
                         raise Exception("Missing Instance ID in node! " + node.name + " Area Name: " + area.name)
+                        # pickup["instance_id"] = "00000000-0000-0000-0000-000000000000"
 
                     level_data[region.name]["rooms"][area.name]["pickups"].append(pickup)
-            if set_folder:
-                level_data[region.name]["worldFolder"] = region.extra["pak_folder"]
 
         # strip extraneous info
         level_data = _remove_empty(level_data)
@@ -211,10 +257,6 @@ class MP1RPatchDataFactory(PatchDataFactory):
         starting_room = _name_for_start_location(db.region_list, self.patches.starting_location)
 
         starting_resources = self.patches.starting_resources()
-        starting_items = {
-            name: starting_resources[db.resource_database.get_item(index)]
-            for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
-        }
 
         data: dict = {
             # TODO: develop new schema for data
@@ -224,8 +266,6 @@ class MP1RPatchDataFactory(PatchDataFactory):
                 "resultsString": _create_results_screen_text(self.description),
                 "startingRoom": starting_room,
                 "difficultyBehavior": self.configuration.ingame_difficulty.randomprime_value,
-                "startingItems": starting_items,
-                "etankCapacity": self.configuration.energy_per_tank,
                 "mainMenuMessage": f"Randovania v{randovania.VERSION}\n{self.description.shareable_word_hash}",
                 "creditsString": credits_string,
                 "artifactHints": {artifact.long_name: text for artifact, text in resulting_hints.items()},
