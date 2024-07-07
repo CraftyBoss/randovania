@@ -11,7 +11,6 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.metroid_prime_remastered.exporter.hint_namer import MP1RHintNamer
-from randovania.games.metroid_prime_remastered.layout.blank_configuration import MP1RConfiguration
 from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.pickup_pool import pickup_creator
@@ -20,59 +19,9 @@ if TYPE_CHECKING:
     from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
+    from randovania.games.metroid_prime_remastered.layout.blank_configuration import MP1RConfiguration
     from randovania.games.metroid_prime_remastered.layout.blank_cosmetic_patches import MP1RCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
-
-_EASTER_EGG_SHINY_MISSILE = 1024
-
-_STARTING_ITEM_NAME_TO_INDEX = {
-    "powerBeam": "Power",
-    "ice": "Ice",
-    "wave": "Wave",
-    "plasma": "Plasma",
-    "missiles": "Missile",
-    "scanVisor": "Scan",
-    "bombs": "Bombs",
-    "powerBombs": "PowerBomb",
-    "flamethrower": "Flamethrower",
-    "thermalVisor": "Thermal",
-    "charge": "Charge",
-    "superMissile": "Supers",
-    "grapple": "Grapple",
-    "xray": "X-Ray",
-    "iceSpreader": "IceSpreader",
-    "spaceJump": "SpaceJump",
-    "morphBall": "MorphBall",
-    "combatVisor": "Combat",
-    "boostBall": "Boost",
-    "spiderBall": "Spider",
-    "gravitySuit": "GravitySuit",
-    "variaSuit": "VariaSuit",
-    "phazonSuit": "PhazonSuit",
-    "energyTanks": "EnergyTank",
-    "wavebuster": "Wavebuster",
-}
-
-# The following locations have cutscenes that weren't removed
-_LOCATIONS_WITH_MODAL_ALERT = {
-    63,  # Artifact Temple
-    23,  # Watery Hall (Charge Beam)
-    50,  # Research Core
-}
-
-# Show a popup on collection if two or more is for another player.
-# The location to the right is considered for the count, but it can't show a popup.
-_LOCATIONS_GROUPED_TOGETHER = [
-    ({0, 1, 2, 3}, None),  # Main Plaza
-    ({5, 6, 7}, None),  # Ruined Shrine (all 3)
-    ({94}, 97),  # Warrior shrine -> Fiery Shores Tunnel
-    ({55}, 54),  # Gravity Chamber: Upper -> Lower
-    ({19, 17}, None),  # Hive Totem + Transport Access North
-    ({59}, 58),  # Alcove -> Landing Site
-    ({62, 65}, None),  # Root Cave + Arbor Chamber
-    ({15, 16}, None),  # Ruined Gallery
-    ({52, 53}, None),  # Research Lab Aether
-]
 
 
 def _remove_empty(d):
@@ -89,9 +38,8 @@ def _remove_empty(d):
         return {k: v for k, v in ((k, _remove_empty(v)) for k, v in d.items()) if not empty(v)}
 
 
-def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails) -> dict:
-    name = detail.name
-    collection_text = detail.collection_text[0]
+def prime_remastered_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails) -> dict:
+    name = detail.model.name
     pickup_type = "Nothing"
     count = 0
 
@@ -102,7 +50,7 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
         for resource, quantity in detail.conditional_resources[0].resources:
             if resource.extra["item_id"] >= 1000:
                 continue
-            pickup_type = resource.long_name
+            pickup_type = name
             count = quantity
             break
 
@@ -112,26 +60,6 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
         # "hudmemoText": collection_text,
         "pickupCount": count,
     }
-
-    return result
-
-
-def _create_locations_with_modal_hud_memo(pickups: list[pickup_exporter.ExportedPickupDetails]) -> set[int]:
-    result = set()
-
-    for index in _LOCATIONS_WITH_MODAL_ALERT:
-        if pickups[index].other_player:
-            result.add(index)
-
-    for indices, extra in _LOCATIONS_GROUPED_TOGETHER:
-        num_other = sum(pickups[i].other_player for i in indices)
-        if extra is not None:
-            num_other += pickups[extra].other_player
-
-        if num_other > 1:
-            for index in indices:
-                if pickups[index].other_player:
-                    result.add(index)
 
     return result
 
@@ -210,16 +138,15 @@ class MP1RPatchDataFactory(PatchDataFactory):
                     rel_path = Path(region.extra["pak_folder"])
                     rel_path = rel_path.joinpath(area.extra["pak_file"] + ".pak")
 
-                    level_data[region.name]["rooms"][area.name]["pak_path"] = rel_path.__str__()
+                    level_data[region.name]["rooms"][area.name]["pakPath"] = rel_path.__str__()
 
                 for node in pickup_nodes:
                     pickup_index = node.pickup_index.index
-                    pickup = prime1_pickup_details_to_patcher(pickup_list[pickup_index])
+                    pickup = prime_remastered_pickup_details_to_patcher(pickup_list[pickup_index])
                     if "instance_id" in node.extra:
-                        pickup["instance_id"] = node.extra["instance_id"]
+                        pickup["instanceId"] = node.extra["instance_id"]
                     else:
                         raise Exception("Missing Instance ID in node! " + node.name + " Area Name: " + area.name)
-                        # pickup["instance_id"] = "00000000-0000-0000-0000-000000000000"
 
                     level_data[region.name]["rooms"][area.name]["pickups"].append(pickup)
 
