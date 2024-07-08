@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from pathlib import Path
 from typing import TYPE_CHECKING
 
 import randovania
@@ -117,28 +116,27 @@ class MP1RPatchDataFactory(PatchDataFactory):
         level_data = {}
         for region in regions:
             level_data[region.name] = {
-                "transports": {},
+                "worldFolder": "",
                 "rooms": {},
             }
 
             for area in region.areas:
                 level_data[region.name]["rooms"][area.name] = {
-                    "pak_path": "",
+                    "pakName": "",
                     "pickups": [],
                     "doors": {},
                 }
 
         # serialize pickup modifications
         for region in regions:
+            set_folder = False
             for area in region.areas:
                 pickup_nodes = (node for node in area.nodes if isinstance(node, PickupNode))
                 pickup_nodes = sorted(pickup_nodes, key=lambda n: n.pickup_index)
 
                 if len(pickup_nodes) > 0:
-                    rel_path = Path(region.extra["pak_folder"])
-                    rel_path = rel_path.joinpath(area.extra["pak_file"] + ".pak")
-
-                    level_data[region.name]["rooms"][area.name]["pakPath"] = rel_path.__str__()
+                    level_data[region.name]["rooms"][area.name]["pakName"] = area.extra["pak_file"] + ".pak"
+                    set_folder = True
 
                 for node in pickup_nodes:
                     pickup_index = node.pickup_index.index
@@ -149,6 +147,8 @@ class MP1RPatchDataFactory(PatchDataFactory):
                         raise Exception("Missing Instance ID in node! " + node.name + " Area Name: " + area.name)
 
                     level_data[region.name]["rooms"][area.name]["pickups"].append(pickup)
+            if set_folder:
+                level_data[region.name]["worldFolder"] = region.extra["pak_folder"]
 
         # strip extraneous info
         level_data = _remove_empty(level_data)
