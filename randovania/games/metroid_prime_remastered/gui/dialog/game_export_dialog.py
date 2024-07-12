@@ -229,21 +229,21 @@ class MP1RGameExportDialog(GameExportDialog, Ui_RemasteredGameExportDialog):
         if per_game.input_path is not None:
             self.input_file_edit.setText(str(per_game.input_path))
 
-        # if per_game.output_preference is not None:
-        #     output_preference = json.loads(per_game.output_preference)
-        #     tab_options = output_preference["tab_options"]
-        #
-        #     for tab_name, the_tab in self._output_tab_by_name.items():
-        #         if tab_name == output_preference.get("selected_tab"):
-        #             index = self.output_tab_widget.indexOf(the_tab)
-        #             if self.output_tab_widget.isTabVisible(index):
-        #                 self.output_tab_widget.setCurrentIndex(index)
-        #
-        #         try:
-        #             if tab_name in tab_options:
-        #                 the_tab.restore_options(tab_options[tab_name])
-        #         except Exception:
-        #             logging.exception("Unable to restore preferences for output")
+        if per_game.output_preference is not None:
+            output_preference = json.loads(per_game.output_preference)
+            tab_options = output_preference["tab_options"]
+
+            for tab_name, the_tab in self._output_tab_by_name.items():
+                if tab_name == output_preference.get("selected_tab"):
+                    index = self.output_tab_widget.indexOf(the_tab)
+                    if self.output_tab_widget.isTabVisible(index):
+                        self.output_tab_widget.setCurrentIndex(index)
+
+                try:
+                    if tab_name in tab_options:
+                        the_tab.restore_options(tab_options[tab_name])
+                except Exception:
+                    logging.exception("Unable to restore preferences for output")
 
         # Accept
         self.output_tab_widget.currentChanged.connect(self.update_accept_validation)

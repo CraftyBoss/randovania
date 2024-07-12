@@ -29,6 +29,10 @@
             "randovania/games/fusion/gui/generated"
         ],
         [
+            "randovania/games/metroid_prime_remastered/gui/ui_files/*.ui",
+            "randovania/games/metroid_prime_remastered/gui/generated"
+        ],
+        [
             "randovania/games/planets_zebeth/gui/ui_files/*.ui",
             "randovania/games/planets_zebeth/gui/generated"
         ],
