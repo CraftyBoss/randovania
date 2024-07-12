@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
 from randovania.games.game import RandovaniaGame
+from randovania.games.metroid_prime_remastered.layout.blank_configuration import MP1RConfiguration
 from randovania.games.planets_zebeth.layout.planets_zebeth_configuration import PlanetsZebethConfiguration
 from randovania.games.prime1.layout.prime_configuration import DamageReduction, IngameDifficulty, PrimeConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
@@ -89,6 +90,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
             PrimeConfiguration
             | EchoesConfiguration
             | CorruptionConfiguration
+            | MP1RConfiguration
             | AM2RConfiguration
             | FusionConfiguration
             | PlanetsZebethConfiguration,
