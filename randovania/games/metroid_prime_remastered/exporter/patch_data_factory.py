@@ -75,6 +75,35 @@ _LOCATIONS_GROUPED_TOGETHER = [
 ]
 
 
+_STARTING_ITEM_NAME_TO_INDEX = {
+    "PowerBeam": "Power",
+    "Ice": "Ice",
+    "Wave": "Wave",
+    "Plasma": "Plasma",
+    "Missiles": "Missile",
+    "ScanVisor": "Scan",
+    "Bombs": "Bombs",
+    "PowerBombs": "PowerBomb",
+    "Flamethrower": "Flamethrower",
+    "ThermalVisor": "Thermal",
+    "Charge": "Charge",
+    "SuperMissile": "Supers",
+    "Grapple": "Grapple",
+    "Xray": "X-Ray",
+    "IceSpreader": "IceSpreader",
+    "SpaceJump": "SpaceJump",
+    "MorphBall": "MorphBall",
+    "CombatVisor": "Combat",
+    "BoostBall": "Boost",
+    "SpiderBall": "Spider",
+    "GravitySuit": "GravitySuit",
+    "VariaSuit": "VariaSuit",
+    "PhazonSuit": "PhazonSuit",
+    "EnergyTanks": "EnergyTank",
+    "Wavebuster": "Wavebuster",
+}
+
+
 def _remove_empty(d):
     """recursively remove empty lists, empty dicts, or None elements from a dictionary"""
 
@@ -108,9 +137,9 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
 
     result = {
         "type": pickup_type,
-        # "scanText": f"{name}. {detail.description}".strip(),
-        # "hudmemoText": collection_text,
+        "model": pickup_type,  # placeholder for now, we don't have actual need yet to split type from model
         "pickupCount": count,
+        "instanceId": "",
     }
 
     return result
@@ -257,6 +286,10 @@ class MP1RPatchDataFactory(PatchDataFactory):
         starting_room = _name_for_start_location(db.region_list, self.patches.starting_location)
 
         starting_resources = self.patches.starting_resources()
+        starting_items = {
+            name: starting_resources[db.resource_database.get_item(index)]
+            for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
+        }
 
         data: dict = {
             # TODO: develop new schema for data
@@ -266,6 +299,8 @@ class MP1RPatchDataFactory(PatchDataFactory):
                 "resultsString": _create_results_screen_text(self.description),
                 "startingRoom": starting_room,
                 "difficultyBehavior": self.configuration.ingame_difficulty.randomprime_value,
+                "startingItems": starting_items,
+                "etankCapacity": self.configuration.energy_per_tank,
                 "mainMenuMessage": f"Randovania v{randovania.VERSION}\n{self.description.shareable_word_hash}",
                 "creditsString": credits_string,
                 "artifactHints": {artifact.long_name: text for artifact, text in resulting_hints.items()},

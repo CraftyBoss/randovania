@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
-
 if TYPE_CHECKING:
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -13,10 +11,14 @@ if TYPE_CHECKING:
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
     from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
+    from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy
+    from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
 
     return [
         PresetTrickLevel,
         PresetLocationPool,
+        PresetPatcherEnergy,
+        PresetStartingArea,
         PresetItemPool,
     ]
