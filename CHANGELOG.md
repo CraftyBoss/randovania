@@ -14,13 +14,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### AM2R
 
 - Added: Progressive pickups can now be configured to be placed vanilla.
+- Added: The first log entry in the game now displays a history of the collected items.
+- Added: Multiworld generation now warns when chaos settings are enabled.
+- Added: Cosmetic option to randomly color shift tilesets or backgrounds.
+- Changed: When "Skip Gameplay cutscenes" is on, the Tower activation cutscene will also be skipped.
+- Changed:  The Septogg in Breeding Grounds 3 South Gamma will now spawn instantly after defeating the Gamma.
 - Fixed: The Tower - Dark Maze now has the correct light level.
+- Fixed: Exporting a game after a Music Rando game now properly deletes all randomized songs.
+- Fixed: The Baby now requires all DNA in order to be collected again.
+
+#### Logic Database
+
+##### The Tower
+
+- Added: Ext. Zeta Nest East Access now has an IBJ (intermediate) + Knowledge (Beginner) + Spider method of crossing the room from the right.
+- Added: Gamma Nest West Access now has an IBJ (intermediate) + Knowledge (Beginner) + Spider method of crossing the room from center to right.
+- Fixed: Ext. Zeta Nest East Access now has corrected Morph Ball requirements and trick types.
+- Fixed: Ext. Zeta Nest West Access now has corrected Morph Ball requirements and trick types.
+- Fixed: Ext. Gamma Nest NE Access now has corrected Morph Ball requirements and trick types.
+- Fixed: Ext. Zeta Nest West Access now has corrected Morph Ball requirements and trick types.
+
+### Metroid Prime 2: Echoes
+
+- Added: FAQ for Sanctuary Entrance Kinetic Orb Cannon.
 
 ### Metroid: Samus Returns
 
+- Added: Cosmetic option to shuffle music either by song type or full shuffle.
 - Added: More starting locations have been added for all areas.
 - Added: Progressive pickups can now be configured to be placed vanilla.
+- Added: New generic offworld items for Missiles, Beams, and Suits in multiworld.
 - Changed: Room Names on the HUD are now enabled by default.
+- Changed: Power Bomb drop rates have been bumped to 20% from 10-15% for nearly all enemies.
+- Changed: The music in Surface West now plays the Surface East - Landing Site theme if you do not have the Baby and all DNA collected.
+- Changed: The Aeion orbs after collecting major upgrades has been restored.
+- Fixed: The hidden area in Area 7 - Spider Boost Tunnel South not being removed fully.
+- Fixed: Negative Metroid count if defeating the Larva Metroids in reverse.
+- Fixed: Visual bug where Samus would display incorrectly after reloading to checkpoint from a boss fight.
+- Fixed: The pickup from Arachnus no longer faces the screen when it spawns.
 
 ## [8.2.1] - 2024-07-05
 
