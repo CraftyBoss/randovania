@@ -11,7 +11,7 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.metroid_prime_remastered.exporter.hint_namer import MP1RHintNamer
 from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode
-from randovania.games.prime1.patcher import prime1_elevators, prime_items
+from randovania.games.prime1.patcher import prime_items
 from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
@@ -93,11 +93,9 @@ def prime_remastered_pickup_details_to_patcher(detail: pickup_exporter.ExportedP
 
 
 def _name_for_location(region_list: RegionList, location: AreaIdentifier) -> str:
-    loc = location.as_tuple
-    if loc in prime1_elevators.RANDOMPRIME_CUSTOM_NAMES and loc != ("Frigate Orpheon", "Exterior Docking Hangar"):
-        return prime1_elevators.RANDOMPRIME_CUSTOM_NAMES[loc]
-    else:
-        return region_list.area_name(region_list.area_by_area_location(location), separator=":")
+    area = region_list.area_by_area_location(location)
+    region = region_list.region_by_area_location(location)
+    return f'{region.extra["pak_folder"]}:{area.extra["pak_file"]}'
 
 
 def _name_for_start_location(region_list: RegionList, location: NodeIdentifier) -> str:
