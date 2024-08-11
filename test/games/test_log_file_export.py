@@ -109,9 +109,11 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "dread/custom_start.rdvgame",  # crazy settings
         "dread/custom_patcher_data.rdvgame",  # custom patcher data
         "dread/all_settings.rdvgame",  # all settings enabled
+        "dread/hide_all_with_nothing.rdvgame",  # Model+scan+name hidden with nothing data
         # Prime 1
         "prime1_crazy_seed.rdvgame",  # chaos features
         "prime1_crazy_seed_one_way_door.rdvgame",  # same as above but 1-way doors
+        "prime1_refills.rdvgame",  # Refill items + custom artifact count
         # Samus Returns
         "samus_returns/starter_preset.rdvgame",  # starter preset
         "samus_returns/start_inventory.rdvgame",  # test for starting inventory and export ids
