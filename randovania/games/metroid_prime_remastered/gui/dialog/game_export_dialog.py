@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import json
+import logging
 import os
 import platform
 from pathlib import Path
@@ -12,6 +13,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 # Borrow some types from Dread
 from randovania.games.dread.exporter.game_exporter import LinuxRyujinxPath
 from randovania.games.game import RandovaniaGame
+from randovania.games.gui.generated.remastered_game_export_dialog_ui import Ui_RemasteredGameExportDialog
 from randovania.games.metroid_prime_remastered.exporter.game_exporter import MP1RGameExportParams, MP1RModPlatform
 from randovania.games.metroid_prime_remastered.exporter.options import MP1RPerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
@@ -24,15 +26,12 @@ from randovania.gui.dialog.game_export_dialog import (
     spoiler_path_for,
     update_validation,
 )
-from randovania.gui.generated.remastered_game_export_dialog_ui import Ui_RemasteredGameExportDialog
 from randovania.gui.lib import common_qt_lib
 from randovania.lib.ftp_uploader import FtpUploader
 from randovania.lib.windows_drives import get_windows_drives
 
 if TYPE_CHECKING:
-    from pathlib import Path
-
-    from randovania.interface_common.options import PerGameOptions
+    from randovania.interface_common.options import Options, PerGameOptions
 
 
 def return_linux_only_controls() -> set[str]:
@@ -53,16 +52,6 @@ def decode_path(s: str | None) -> Path | None:
     if s is None:
         return None
     return Path(s)
-
-
-def add_validation(edit: QtWidgets.QLineEdit, validation: Callable[[], bool], post_validation: Callable[[], None]):
-    def field_validation():
-        common_qt_lib.set_error_border_stylesheet(edit, not validation())
-        post_validation()
-
-    common_qt_lib.set_error_border_stylesheet(edit, False)
-    edit.field_validation = field_validation
-    edit.textChanged.connect(field_validation)
 
 
 # Checks for some important files in romfs directory as "validation"
@@ -164,17 +153,6 @@ class MP1RGameExportDialog(GameExportDialog, Ui_RemasteredGameExportDialog):
         self.tab_ftp.is_valid = self.ftp_is_valid
         self.ftp_test_button.setVisible(False)
         self.ftp_anonymous_check.clicked.connect(self.ftp_on_anonymous_check)
-        add_validation(
-            self.ftp_username_edit,
-            lambda: self.ftp_anonymous_check.isChecked() or self.ftp_username_edit.text(),
-            self.update_accept_validation,
-        )
-        add_validation(
-            self.ftp_password_edit,
-            lambda: self.ftp_anonymous_check.isChecked() or self.ftp_password_edit.text(),
-            self.update_accept_validation,
-        )
-        add_validation(self.ftp_ip_edit, lambda: self.ftp_ip_edit.text(), self.update_accept_validation)
         self.ftp_port_edit.setValidator(QtGui.QIntValidator(1, 65535, self))
 
         self.tab_ftp.serialize_options = lambda: {
@@ -304,24 +282,18 @@ class MP1RGameExportDialog(GameExportDialog, Ui_RemasteredGameExportDialog):
         """Creates the GameExportParams for this specific game,
         based on the data provided by the user in this window."""
 
-        clean_output_path = False
         output_tab = self.output_tab_widget.currentWidget()
         if output_tab is self.tab_custom_path:
             output_path = path_in_edit(self.custom_path_edit)
-            post_export = None
 
         elif output_tab is self.tab_ryujinx:
             output_path = self.get_path_to_ryujinx()
-            post_export = None
 
         elif output_tab is self.tab_ftp:
             output_path = self._get_ftp_internal_path()
-            post_export = self.get_ftp_uploader()
-            clean_output_path = True
 
         elif output_tab is self.tab_sd_card:
             output_path = self.get_sd_card_output_path()
-            post_export = None
 
         else:
             raise RuntimeError(f"Unknown output_tab: {output_tab}")
