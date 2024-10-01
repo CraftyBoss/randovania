@@ -13,9 +13,11 @@ from PySide6 import QtCore, QtGui, QtWidgets
 # Borrow some types from Dread
 from randovania.games.dread.exporter.game_exporter import LinuxRyujinxPath
 from randovania.games.game import RandovaniaGame
-from randovania.games.gui.generated.remastered_game_export_dialog_ui import Ui_RemasteredGameExportDialog
 from randovania.games.metroid_prime_remastered.exporter.game_exporter import MP1RGameExportParams, MP1RModPlatform
 from randovania.games.metroid_prime_remastered.exporter.options import MP1RPerGameOptions
+from randovania.games.metroid_prime_remastered.gui.generated.remastered_game_export_dialog_ui import (
+    Ui_RemasteredGameExportDialog,
+)
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     is_directory_validator,
