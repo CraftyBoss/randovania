@@ -462,6 +462,10 @@ Extra - room_id: [13]
   > Door to Mimic Storage
       All of the following:
           Any of the following:
+              # Damage Reqs
+              Varia Suit
+              Space Jump and Damage Runs (Expert) and Cold Damage ≥ 333
+          Any of the following:
               Space Jump or Can Freeze Enemies With Any Weapon
               # Wall Jump from right side https://youtu.be/-GGGrkNAvF4
               Jump Extends (Expert) and Wall Jump (Intermediate) and Can Single Walljump
@@ -1608,4 +1612,8 @@ Extra - room_id: [51]
           Any of the following:
               Space Jump
               Hi-Jump and Can Freeze Enemies With Any Weapon
+          Any of the following:
+              # Damage Reqs
+              Varia Suit
+              Space Jump and Damage Runs (Expert) and Cold Damage ≥ 280
 
