@@ -38,7 +38,14 @@ def set_dark_theme(active: bool, compact: bool = False, *, app: QtWidgets.QAppli
         """
 
     style += """
-    QScrollArea { border: default; }
+    QScrollArea {
+        border: default;
+    }
+
+    QListWidget::item {
+        padding: 6px;
+        border: 0px solid red; /* FIXME: ugly hack to make item not jump around on hover/selection*/
+    }
 
     QStatusBar QLabel:hover {
         background: transparent;
