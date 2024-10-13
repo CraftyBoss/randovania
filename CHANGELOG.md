@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The "Customize Preset" window has been given a visual overhaul.
 - Changed: Filtering in the Generation Order tab is now case-insensitive.
 - Changed: The Area View of the Data Visualizer now always has a dark gray background to help with readability.
+- Changed: The progress bar in the Main Window and Game Details window is now in a status bar and only displayed when relevant.
+- Fixed: When an error during exporting occurs, the progress bar will now reset.
 
 ### Resolver
 
@@ -94,22 +96,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The preset entries for the Goal and Hints don't enforce a minimum size anymore.
 - Changed: Adjust spacing on the Elevator preset entry.
 
-## [8.5.x] - 2024-10-??
+## [8.5.0] - 2024-10-01
 
 - Fixed: Improved server performance when importing/generating games with a huge number of worlds.
-
-### Door Lock Randomizer
-- Added: Option that changes Door Lock Rando so that when determining which types a door can be randomized into, the algorithm searches for either side of the door using the resolver. This means some doors are more likely to have locks on them. Generation will also be faster.
 
 ### AM2R
 
 - Added: 1 more joke hint
 - Fixed: A joke hint showing as two joke hints.
-
-- Changed: When replacing a preset in a multiworld session, the user playing the world will now be unmarked from being ready.
-
-- Changed: The progress bar in the Main Window and Game Details window is now in a status bar and only displayed when relevant.
-- Changed: In the game details window, add a tooltip mentioning when the export of a game cannot be stopped.
 
 ### Metroid Dread
 
@@ -133,6 +127,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.4.0] - 2024-09-04
 
+- Changed: When replacing a preset in a multiworld session, the user playing the world will now be unmarked from being ready.
 - Fixed: The "Last Activity" text on the Multiplayer Session window is not aligned properly.
 
 ### AM2R
@@ -172,10 +167,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: [JP/PAL] Reverse Lower Mines setting impassible at Metroid Quarantine B
 - Fixed: [Experimental] Item Position Rando fixes: Scan visibility through walls and Artifact Temple/Burn Dome positions
 - Changed: Cosmetic improvements to Impact Crater's dead bosses 2nd pass layer
-
-### Metroid Prime 2: Echoes
-
-- Removed: The "Fewest Changes" preset was removed.
 
 ### Metroid: Samus Returns
 
