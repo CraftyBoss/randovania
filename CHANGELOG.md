@@ -20,7 +20,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### AM2R
 
 - Changed: Adjusted the spacing of the Hints and Goal entries to be more consistent with other entries.
-- Fixed: An error appearing when going to the Pipe rando preset page with the Depths pipes disabled.
 
 #### Logic Database
 
@@ -61,9 +60,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Laboratory Entrance: Climbing the room with Walljumps and Morph Glides now requires Morph Ball.
 - Fixed: Laboratory Spiked Hall: Morph Gliding across the room now requires Morph Ball.
 
-### Metroid Dread
+### Cave Story
 
-- Fixed: Common case where an invalid input RomFS was considered valid.
+- Changed: The Objective preset entry don't enforce a minimum size anymore.
+- Changed: Adjust spacing on the HP preset entry.
 
 ### Metroid Prime
 
@@ -91,13 +91,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
-- Changed: Updated tournament winners scan text for Echoes 2024.
 - Added: Colorblind-friendly textures for main gyro.
 
 ### Metroid: Samus Returns
 
 - Fixed: Rare case of the connector not being able to reconnect until Randovania is restarted.
-- Fixed: Speed Booster offworld not displaying correctly for Metroid Dread.
 - Changed: The preset entry for Aeion and Energy are now combined into one.
 - Changed: The preset entries for the Goal and Hints don't enforce a minimum size anymore.
 - Changed: Adjust spacing on the Elevator preset entry.
