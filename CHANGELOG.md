@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.7.x] - 2024-12-??
 
-- Changed: Add confirmation dialog when deleting a world in Multiworld.
+- Changed: Added options to alert for when generation completes in the Preferences menu, which is useful for when Randovania is generating in the background.
 
 ### Metroid Dread
 
@@ -19,15 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Opening the Storm Missile Gate in Cold Room now requires Screw Attack.
 - Changed: Getting back to the door to Energy Recharge Station after opening the Storm missile Gate now accounts for needing two units of Power Bomb ammo.
 
-### Metroid Prime 2: Echoes
-
-- Removed: The "Fewest Changes" preset was removed.
-
-## [8.6.1] - 2024-11-03
-
-- Fixed: Exporting Metroid Prime 2: Echoes games when the "Coin Chest" model is used now works.
-
-## [8.6.0] - 2024-11-01
+## [8.6.x] - 2024-11-??
 
 - Changed: The "Customize Preset" window has been given a visual overhaul.
 - Changed: Filtering in the Generation Order tab is now case-insensitive.
