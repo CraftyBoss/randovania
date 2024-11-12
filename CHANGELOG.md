@@ -5,7 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.6.x] - 2024-11-??
+## [8.7.x] - 2024-12-??
+
+- Changed: Added options to alert the user via flashing the taskbar/playing a sound when generation completes in the Preferences menu.
+- Changed: Add confirmation dialog when deleting a world in Multiworld.
+- Changed: Add confirmation dialog when closing the main window or multiplayer session window while a task is in progress.
+
+### Door Lock Randomizer
+
+- Added: Experimental option that changes Door Lock Rando so that when determining which types a door can be randomized into, the algorithm searches for either side of the door using the resolver. This means some doors are more likely to have locks on them. Generation will also be faster.  
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Ferenia
+
+- Added: Wall Jump (Beginner) to get from Cold Room (Storm Missile Gate) to Wave Beam Tutorial.
+- Changed: Opening the Storm Missile Gate in Cold Room now requires Screw Attack.
+- Changed: Getting back to the door to Energy Recharge Station after opening the Storm missile Gate now accounts for needing two units of Power Bomb ammo.
+
+### Metroid Prime 2: Echoes
+
+- Removed: The "Fewest Changes" preset was removed.
+
+### Metroid: Samus Returns
+
+- Fixed: When Arachnus is configured to be the final boss, logic now requires collecting all DNA.
+
+## [8.6.1] - 2024-11-03
+
+- Fixed: Exporting Metroid Prime 2: Echoes games when the "Coin Chest" model is used now works.
+
+## [8.6.0] - 2024-11-01
 
 - Changed: The "Customize Preset" window has been given a visual overhaul.
 - Changed: Filtering in the Generation Order tab is now case-insensitive.
@@ -81,9 +113,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Fixed: Main Plaza vault ledge door now can now be shuffled via door lock rando
-- Fixed: Chaos option export error when submerging rooms
-- Fixed: Setting Screen Brightness in the cosmetic settings mismatching with what appears in-game.
 - Added: The Data Visualizer now shows an Area View.
 - Changed: Artifact, Phazon Suit, and Missile Expansion generation weights adjusted resulting in more even item-location probability distribution.
 
