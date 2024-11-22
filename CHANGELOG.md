@@ -23,6 +23,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The option of "Remove Bars in Great Tree Hall". This feature removes the Boost Ball bars obstacle in Tallon Overworld's Great Tree Hall allowing free movement between the lower and upper levels of the room.
 - Changed: Damage Reduction for Starter Preset and Moderate Challenge is now Additive.
 
+#### Logic Database
+
+##### Tallon Overworld
+
+- Added: Now checks for Knowledge (Beginner) for reverse Frigate without activating the Thermal Conduits.
+
 ### Metroid Prime 2: Echoes
 
 #### Logic Database
