@@ -18,20 +18,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Experimental option that changes Door Lock Rando so that when determining which types a door can be randomized into, the algorithm searches for either side of the door using the resolver. This means some doors are more likely to have locks on them. Generation will also be faster.
 
+### AM2R
+
+- Changed: DNA hints are now sorted. If the DNA is for your own world, it is sorted based on the region, otherwise alphabetically based on the World name.
+
 ### Metroid Prime
 
 - Added: The option of "Remove Bars in Great Tree Hall". This feature removes the Boost Ball bars obstacle in Tallon Overworld's Great Tree Hall allowing free movement between the lower and upper levels of the room.
 - Changed: Damage Reduction for Starter Preset and Moderate Challenge is now Additive.
-
-#### Logic Database
-
-##### Tallon Overworld
-
-- Added: Reverse Frigate now requires Knowledge (Beginner) in every room where the door usually requires activating Thermal Conduits from the other side.
+- Fixed: Setting Screen Brightness in the cosmetic settings mismatching with what appears in-game.
 
 #### Logic Database
 
 - Changed: The Varia-only heat reduction is now done via a miscellaneous resource rather than being patched at runtime.
+
+##### Tallon Overworld
+
+- Added: Reverse Frigate now requires Knowledge (Beginner) in every room where the door usually requires activating Thermal Conduits from the other side.
 
 ### Metroid Prime 2: Echoes
 
@@ -141,7 +144,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The trick to pull the Grapple Block in Energy Recharge Station (Gate) using only Normal Bombs to break the Bomb Blocks has been upgraded to Movement (Advanced).
 
 ### Metroid Prime
-
 - Added: The Data Visualizer now shows an Area View.
 - Changed: Artifact, Phazon Suit, and Missile Expansion generation weights adjusted resulting in more even item-location probability distribution.
 
