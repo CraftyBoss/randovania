@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.7.x] - 2024-12-??
 
+- Added: When exporting a game fails, for certain cases Randovania will now verify your input files for bad files. This is supported by Metroid Prime and Metroid Prime 2: Echoes.
 - Added: Drag and dropping a preset file into the main window now imports it.
 - Added: Options to alert the user via flashing the taskbar/playing a sound when generation completes in the Preferences menu.
 - Added: Show confirmation dialog when deleting a world in Multiworld.
@@ -28,6 +29,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Damage Reduction for Starter Preset and Moderate Challenge is now Additive.
 - Fixed: Setting Screen Brightness in the cosmetic settings mismatching with what appears in-game.
 - Changed: Missile Blast Shields have received some Quality of Life changes: they now automatically open the door when broken, even from behind, as well as being two-way if the opposite side was a normal door.
+
+#### Logic Database
+
+- Changed: The Varia-only heat reduction is now done via a miscellaneous resource rather than being patched at runtime.
+- Changed: Going through Morph Ball Doors doesn't require the ability to shoot a beam anymore.
+
+##### Tallon Overworld
+
+- Added: Reverse Frigate now requires Knowledge (Beginner) in every room where the door usually requires activating Thermal Conduits from the other side.
 
 ### Metroid Prime 2: Echoes
 
