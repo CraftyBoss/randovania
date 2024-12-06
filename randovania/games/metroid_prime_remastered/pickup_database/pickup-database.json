@@ -102,7 +102,7 @@
         "Charge Beam": {
             "pickup_category": "beam",
             "broad_category": "beam_related",
-            "model_name": "Charge Beam",
+            "model_name": "ChargeBeam",
             "offworld_models": {
                 "am2r": "sItemChargeBeam",
                 "dread": "powerup_chargebeam",
@@ -131,7 +131,7 @@
         "Wave Beam": {
             "pickup_category": "beam",
             "broad_category": "beam_related",
-            "model_name": "Wave Beam",
+            "model_name": "WaveBeam",
             "offworld_models": {
                 "am2r": "sItemWaveBeamPrime"
             },
@@ -145,7 +145,7 @@
         "Ice Beam": {
             "pickup_category": "beam",
             "broad_category": "beam_related",
-            "model_name": "Ice Beam",
+            "model_name": "IceBeam",
             "offworld_models": {
                 "am2r": "sItemIceBeamPrime"
             },
@@ -159,7 +159,7 @@
         "Plasma Beam": {
             "pickup_category": "beam",
             "broad_category": "beam_related",
-            "model_name": "Plasma Beam",
+            "model_name": "PlasmaBeam",
             "offworld_models": {
                 "am2r": "sItemPlasmaBeamPrime"
             },
@@ -173,7 +173,7 @@
         "Missile Launcher": {
             "pickup_category": "missile",
             "broad_category": "missile_related",
-            "model_name": "Missile",
+            "model_name": "Missiles",
             "offworld_models": {
                 "am2r": "sItemMissile",
                 "dread": "powerup_missile",
@@ -193,7 +193,7 @@
         "Grapple Beam": {
             "pickup_category": "movement",
             "broad_category": "movement",
-            "model_name": "Grapple Beam",
+            "model_name": "GrappleBeam",
             "offworld_models": {
                 "am2r": "sItemGrappleBeamPrime",
                 "dread": "powerup_grapplebeam",
@@ -209,7 +209,7 @@
         "Combat Visor": {
             "pickup_category": "visor",
             "broad_category": "visor",
-            "model_name": "Combat Visor",
+            "model_name": "CombatVisor",
             "offworld_models": {
                 "am2r": "sItemCombatVisorPrime"
             },
@@ -222,7 +222,7 @@
         "Scan Visor": {
             "pickup_category": "visor",
             "broad_category": "visor",
-            "model_name": "Scan Visor",
+            "model_name": "ScanVisor",
             "offworld_models": {
                 "am2r": "sItemScanVisorPrime",
                 "prime2": "ScanVisor INCOMPLETE"
@@ -236,7 +236,7 @@
         "Thermal Visor": {
             "pickup_category": "visor",
             "broad_category": "visor",
-            "model_name": "Thermal Visor",
+            "model_name": "ThermalVisor",
             "offworld_models": {
                 "am2r": "sItemThermalVisorPrime"
             },
@@ -250,7 +250,7 @@
         "X-Ray Visor": {
             "pickup_category": "visor",
             "broad_category": "visor",
-            "model_name": "X-Ray Visor",
+            "model_name": "XRayVisor",
             "offworld_models": {
                 "am2r": "sItemXrayVisorPrime"
             },
@@ -264,7 +264,7 @@
         "Space Jump Boots": {
             "pickup_category": "movement",
             "broad_category": "movement",
-            "model_name": "Space Jump Boots",
+            "model_name": "SpaceJumpBoots",
             "offworld_models": {
                 "am2r": "sItemSpaceJump",
                 "dread": "powerup_spacejump",
@@ -280,7 +280,7 @@
         "Energy Tank": {
             "pickup_category": "energy_tank",
             "broad_category": "life_support",
-            "model_name": "Energy Tank",
+            "model_name": "EnergyTanks",
             "offworld_models": {
                 "am2r": "sItemEnergyTank",
                 "dread": "item_energytank",
@@ -296,7 +296,7 @@
         "Morph Ball": {
             "pickup_category": "morph_ball",
             "broad_category": "morph_ball_related",
-            "model_name": "Morph Ball",
+            "model_name": "MorphBall",
             "offworld_models": {
                 "am2r": "sItemMorphBallPrime",
                 "dread": "powerup_morphball"
@@ -311,7 +311,7 @@
         "Morph Ball Bomb": {
             "pickup_category": "morph_ball",
             "broad_category": "morph_ball_related",
-            "model_name": "Morph Ball Bomb",
+            "model_name": "MorphBallBombs",
             "offworld_models": {
                 "am2r": "sItemBombsPrime",
                 "dread": "powerup_bomb",
@@ -327,7 +327,7 @@
         "Boost Ball": {
             "pickup_category": "morph_ball",
             "broad_category": "morph_ball_related",
-            "model_name": "Boost Ball",
+            "model_name": "BoostBall",
             "offworld_models": {
                 "am2r": "sItemBoostBallPrime",
                 "dread": "powerup_speedbooster",
@@ -343,7 +343,7 @@
         "Spider Ball": {
             "pickup_category": "morph_ball",
             "broad_category": "morph_ball_related",
-            "model_name": "Spider Ball",
+            "model_name": "SpiderBall",
             "offworld_models": {
                 "am2r": "sItemSpiderBall",
                 "dread": "powerup_spidermagnet",
@@ -359,7 +359,7 @@
         "Power Bomb": {
             "pickup_category": "morph_ball",
             "broad_category": "morph_ball_related",
-            "model_name": "Power Bomb",
+            "model_name": "PowerBombs",
             "offworld_models": {
                 "am2r": "sItemPowerBombLauncherPrime",
                 "dread": "powerup_powerbomb",
@@ -379,7 +379,7 @@
         "Power Suit": {
             "pickup_category": "suit",
             "broad_category": "life_support",
-            "model_name": "Power Suit",
+            "model_name": "PowerSuit",
             "offworld_models": {},
             "progression": [
                 "PowerSuit"
@@ -392,7 +392,7 @@
         "Varia Suit": {
             "pickup_category": "suit",
             "broad_category": "life_support",
-            "model_name": "Varia Suit",
+            "model_name": "VariaSuit",
             "offworld_models": {
                 "am2r": "sItemVariaSuitPrime",
                 "dread": "powerup_variasuit",
@@ -408,7 +408,7 @@
         "Gravity Suit": {
             "pickup_category": "suit",
             "broad_category": "life_support",
-            "model_name": "Gravity Suit",
+            "model_name": "GravitySuit",
             "offworld_models": {
                 "am2r": "sItemGravitySuitPrime",
                 "dread": "powerup_gravitysuit",
@@ -424,7 +424,7 @@
         "Phazon Suit": {
             "pickup_category": "suit",
             "broad_category": "life_support",
-            "model_name": "Phazon Suit",
+            "model_name": "PhazonSuit",
             "offworld_models": {
                 "am2r": "sItemPhazonSuitPrime",
                 "dread": "powerup_variasuit",
@@ -440,7 +440,7 @@
         "Super Missile": {
             "pickup_category": "charge_combo",
             "broad_category": "beam_related",
-            "model_name": "Super Missile",
+            "model_name": "SuperMissile",
             "offworld_models": {
                 "am2r": "sItemSuperMissilePrime",
                 "dread": "powerup_supermissile",
@@ -470,7 +470,7 @@
         "Ice Spreader": {
             "pickup_category": "charge_combo",
             "broad_category": "beam_related",
-            "model_name": "Ice Spreader",
+            "model_name": "IceSpreader",
             "offworld_models": {
                 "am2r": "sItemIceSpreaderPrime"
             },
@@ -499,7 +499,7 @@
     "ammo_pickups": {
         "Missile Expansion": {
             "broad_category": "missile_related",
-            "model_name": "Missile",
+            "model_name": "Missiles",
             "offworld_models": {
                 "am2r": "sItemMissile",
                 "dread": "item_missiletank",
@@ -515,7 +515,7 @@
         },
         "Power Bomb Expansion": {
             "broad_category": "morph_ball_related",
-            "model_name": "Power Bomb Expansion",
+            "model_name": "PowerBombs",
             "offworld_models": {
                 "am2r": "sItemPowerBomb",
                 "dread": "item_powerbombtank",

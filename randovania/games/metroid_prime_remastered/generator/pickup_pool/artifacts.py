@@ -58,7 +58,7 @@ def create_artifact(
         progression=((resource_database.get_item(prime_items.ARTIFACT_ITEMS[artifact_index]), 1),),
         model=PickupModel(
             game=resource_database.game_enum,
-            name=prime_items.ARTIFACT_MODEL[artifact_index],
+            name=prime_items.ARTIFACT_ITEMS[artifact_index],
         ),
         pickup_category=ARTIFACT_CATEGORY,
         broad_category=pickup_category.GENERIC_KEY_CATEGORY,

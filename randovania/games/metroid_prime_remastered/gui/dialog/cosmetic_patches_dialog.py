@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.games.blank.gui.generated.blank_cosmetic_patches_dialog_ui import Ui_BlankCosmeticPatchesDialog
 from randovania.games.metroid_prime_remastered.layout.blank_cosmetic_patches import MP1RCosmeticPatches
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
-from randovania.gui.generated.blank_cosmetic_patches_dialog_ui import Ui_BlankCosmeticPatchesDialog
 
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
