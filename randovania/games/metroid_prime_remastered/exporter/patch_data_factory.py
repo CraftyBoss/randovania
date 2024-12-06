@@ -7,9 +7,9 @@ import randovania
 from randovania.exporter import pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.games.game import RandovaniaGame
 from randovania.games.metroid_prime_remastered.exporter.hint_namer import MP1RHintNamer
 from randovania.games.metroid_prime_remastered.layout.blank_configuration import MP1RConfiguration
 from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode

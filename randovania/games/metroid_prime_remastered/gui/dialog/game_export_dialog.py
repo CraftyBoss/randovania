@@ -10,8 +10,8 @@ from typing import TYPE_CHECKING
 from PySide6 import QtCore, QtGui, QtWidgets
 
 # Borrow some types from Dread
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.dread.exporter.game_exporter import LinuxRyujinxPath
-from randovania.games.game import RandovaniaGame
 from randovania.games.metroid_prime_remastered.exporter.game_exporter import MP1RGameExportParams, MP1RModPlatform
 from randovania.games.metroid_prime_remastered.exporter.options import MP1RPerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
@@ -27,7 +27,7 @@ from randovania.gui.dialog.game_export_dialog import (
 from randovania.gui.generated.remastered_game_export_dialog_ui import Ui_RemasteredGameExportDialog
 from randovania.gui.lib import common_qt_lib
 from randovania.lib.ftp_uploader import FtpUploader
-from randovania.lib.windows_drives import get_windows_drives
+from randovania.lib.windows_lib import get_windows_drives
 
 if TYPE_CHECKING:
     from pathlib import Path

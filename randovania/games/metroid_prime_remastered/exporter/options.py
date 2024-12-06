@@ -4,8 +4,8 @@ import dataclasses
 from pathlib import Path
 from typing import Self
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.dread.exporter.game_exporter import LinuxRyujinxPath
-from randovania.games.game import RandovaniaGame
 from randovania.games.metroid_prime_remastered.exporter.game_exporter import MP1RModPlatform
 from randovania.interface_common.options import PerGameOptions, decode_if_not_none
 
