@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import randovania
-from randovania.exporter import pickup_exporter
+from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
@@ -221,6 +221,12 @@ class MP1RPatchDataFactory(PatchDataFactory):
             "<Color=#33FFD6>{}</Color>",
         )
 
+        extra_starting = item_names.additional_starting_equipment(self.configuration, db, self.patches)
+        if extra_starting:
+            starting_memo = ", ".join(extra_starting)
+        else:
+            starting_memo = None
+
         artifacts = [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS]
         hint_config = self.configuration.hints
         if hint_config.artifacts == ArtifactHintMode.DISABLED:
@@ -237,7 +243,9 @@ class MP1RPatchDataFactory(PatchDataFactory):
 
         # Tweaks
 
-        starting_room = _name_for_start_location(db.region_list, self.patches.starting_location)
+        start_str = _name_for_start_location(db.region_list, self.patches.starting_location).split(":")
+        starting_world = start_str[0]
+        starting_room = start_str[1]
 
         starting_resources = self.patches.starting_resources()
         starting_items = {
@@ -251,7 +259,9 @@ class MP1RPatchDataFactory(PatchDataFactory):
             "seed": self.description.get_seed_for_player(self.players_config.player_index),
             "gameConfig": {
                 "resultsString": _create_results_screen_text(self.description),
+                "startingWorld": starting_world,
                 "startingRoom": starting_room,
+                "warpToStart": self.configuration.warp_to_start,
                 "difficultyBehavior": self.configuration.ingame_difficulty.randomprime_value,
                 "startingItems": starting_items,
                 "etankCapacity": self.configuration.energy_per_tank,
@@ -269,5 +279,8 @@ class MP1RPatchDataFactory(PatchDataFactory):
                 self.players_config.get_own_uuid().bytes,
             ),
         }
+
+        if starting_memo:
+            data["gameConfig"]["startingMemo"] = starting_memo
 
         return data
